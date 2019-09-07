@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: axiom-api-search
+  name: axiom-api-search
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: axiom-api-search
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: axiom-api-search
+    spec:
+      containers:
+      - image: gcr.io/chrome-energy-243315/axiom-search
+        name: axiom-api-search
+        ports:
+         - name: http
+           containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 20
+        resources: {}
+status: {}
